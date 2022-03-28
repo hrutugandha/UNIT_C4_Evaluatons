@@ -9,7 +9,7 @@ const authorise = require('../middleware/authorise');
 
 const router = require('../contollers/user.controller')
 
-router.post('/',authenticate,authorise, async (req, res) => {
+router.post('/',authenticate, async (req, res) => {
     try{
         const todo = await User.create(req.body);
 
@@ -30,4 +30,15 @@ router.get('', async (req, res) => {
       return res.status(400).send({message: err.message});
     }
 });
+
+router.post("/:id",authorise, (req,res) => {
+    try{
+        const todo = await Todo.create();
+
+        return res.status(200).send(todo);
+
+    }catch(err){
+      return res.status(400).send({message: err.message});
+    }
+})
 
